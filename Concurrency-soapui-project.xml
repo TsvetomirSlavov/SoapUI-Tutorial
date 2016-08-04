@@ -645,12 +645,32 @@ f.write(response, "UTF-8")
 if(fileList.size() >0)
 {
 testRunner.gotoStepByName("Step2")
-}</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="2b1a530a-ac11-4551-b9ff-b7fb094c9288" name="CurrencyConvertorSoap12 TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4e01d8c3-f5b2-4370-9585-9fbe45567964" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ConversionRate TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7d71710d-b66d-4ac0-bc3c-83c956ff4f63" name="ConversionRate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CurrencyConvertorSoap12</con:interface><con:operation>ConversionRate</con:operation><con:request name="ConversionRate" id="f7a8e48b-ada2-46b4-bc26-c077441bb49a"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/CurrencyConvertor.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET/">\r
+}</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="2b1a530a-ac11-4551-b9ff-b7fb094c9288" name="CurrencyConvertorSoap12 TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4e01d8c3-f5b2-4370-9585-9fbe45567964" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ConversionRate TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7d71710d-b66d-4ac0-bc3c-83c956ff4f63" name="ConversionRate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CurrencyConvertorSoap12</con:interface><con:operation>ConversionRate</con:operation><con:request name="ConversionRate" id="f7a8e48b-ada2-46b4-bc26-c077441bb49a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/CurrencyConvertor.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET/">\r
    <soap:Header/>\r
    <soap:Body>\r
       <web:ConversionRate>\r
-         <web:FromCurrency>?</web:FromCurrency>\r
-         <web:ToCurrency>?</web:ToCurrency>\r
+         <web:FromCurrency>USD</web:FromCurrency>\r
+         <web:ToCurrency>INR</web:ToCurrency>\r
       </web:ConversionRate>\r
    </soap:Body>\r
-</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.webserviceX.NET/CurrencyConvertorSoap/ConversionRateRequest"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soap:Envelope>]]></con:request><con:assertion type="Simple Contains" id="e17763ac-b841-4bbd-aaaa-7d22e1d39014" name="Contains"><con:configuration><token>-1</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="5860d243-0b95-467b-aad5-b9253dbc0e62" name="XPath Match"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.webserviceX.NET/'; 
+
+//ns1:ConversionRateResult</path><content>-1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="ab692d06-7ea0-4a92-86c3-364768f6784e" name="Script Assertion"><con:configuration><scriptText>//Define Groovy Utils and holder for validating the XML reponse content
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def holder = groovyUtils.getXmlHolder(messageExchange.responseContent)
+
+//Define the NameSpace
+holder.namespaces["ns"] = "http://www.webserviceX.NET/"
+
+//Get the Value of the Node 'ConversionRateResult' and assign to a variable
+def conversionRate = holder.getNodeValue("//ns:ConversionRateResult")
+
+//print the value of the conversion rate in the Output pane
+log.info "The conversion value from USD to INR is " + conversionRate
+
+//Comparing the value to print 'Pass' or 'Fail'
+if(conversionRate=="63.7854")
+{ log.info "Pass" }
+else
+{ log.info "fail"}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.webserviceX.NET/CurrencyConvertorSoap/ConversionRateRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
