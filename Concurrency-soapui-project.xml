@@ -645,7 +645,28 @@ f.write(response, "UTF-8")
 if(fileList.size() >0)
 {
 testRunner.gotoStepByName("Step2")
-}</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="2b1a530a-ac11-4551-b9ff-b7fb094c9288" name="CurrencyConvertorSoap12 TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4e01d8c3-f5b2-4370-9585-9fbe45567964" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ConversionRate TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7d71710d-b66d-4ac0-bc3c-83c956ff4f63" name="ConversionRate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CurrencyConvertorSoap12</con:interface><con:operation>ConversionRate</con:operation><con:request name="ConversionRate" id="f7a8e48b-ada2-46b4-bc26-c077441bb49a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/CurrencyConvertor.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET/">\r
+}</script></con:config></con:testStep><con:testStep type="groovy" name="Step4" id="08440857-90c6-4d39-9b46-dc256dd95dd6"><con:settings/><con:config><script>import groovy.lang.Binding
+import groovy.util.GroovyScriptEngine
+
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )
+
+// define location of script file relative to SOAPUI project file.
+String projectPath = groovyUtils.projectPath + "/groovy/"
+
+// Create Groovy Script Engine to run Script.
+GroovyScriptEngine gse = new GroovyScriptEngine(projectPath) 
+
+// Load the Groovy Script file 
+externalScript = gse.loadScriptByName("Utility.groovy")  
+
+// Create a runtime instance of script
+instance = externalScript.newInstance()
+
+// Sanity check 
+assert instance!= null
+
+// run a method in external script
+instance.validate()</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="2b1a530a-ac11-4551-b9ff-b7fb094c9288" name="CurrencyConvertorSoap12 TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="4e01d8c3-f5b2-4370-9585-9fbe45567964" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="ConversionRate TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="7d71710d-b66d-4ac0-bc3c-83c956ff4f63" name="ConversionRate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CurrencyConvertorSoap12</con:interface><con:operation>ConversionRate</con:operation><con:request name="ConversionRate" id="f7a8e48b-ada2-46b4-bc26-c077441bb49a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/CurrencyConvertor.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET/">\r
    <soap:Header/>\r
    <soap:Body>\r
       <web:ConversionRate>\r
